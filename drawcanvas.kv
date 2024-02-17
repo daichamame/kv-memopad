@@ -1,0 +1,101 @@
+#:kivy 2.2.1
+MameWidget:
+<MameWidget>:
+    BoxLayout:
+        orientation: 'vertical'
+        size: root.size
+        GridLayout:
+            cols:1
+            rows:3
+            #-----------------------------------------------------------------------
+            # ヘッダ
+            GridLayout:
+                cols:4
+                rows:1
+                size_hint_y:0.1
+                MenuButton:
+                    size_hint_x:0.4
+                    font_size:self.width/12
+                    text: "メモボード"
+                MenuButton:
+                    id:id_lbl
+                    size_hint_x:0.2
+                    background_color:1,1,1,1    # 初期値：白
+                    color:.5,.5,.5,1
+                    text: "細"                  # 初期値：細いペン
+                MenuButton:
+                    size_hint_x:0.2
+                    text: "消す"
+                    on_press: root.clear_canvas()
+                MenuButton:
+                    size_hint_x:0.2
+                    text: "閉じる"
+                    on_press: root.exit_dialog()
+            #-----------------------------------------------------------------------
+            # キャンバス
+            GridLayout:
+                cols:1
+                rows:1
+                size_hint_y:0.8
+                DrawCanvas:
+                    id:id_drawcanvas
+            #-----------------------------------------------------------------------
+            # 色選択
+            GridLayout:
+                cols:10
+                rows:1
+                size_hint_y:0.1
+                MenuButton: # 黒
+                    background_color:0,0,0,1
+                    on_press:root.set_color(0)
+                MenuButton: # 青
+                    background_color:0,0,1,1
+                    on_press:root.set_color(1)
+                MenuButton: # 緑
+                    background_color:0,1,0,1
+                    on_press:root.set_color(2)
+                MenuButton: # 水色
+                    background_color:0,1,1,1
+                    on_press:root.set_color(3)
+                MenuButton: # 赤
+                    background_color:1,0,0,1
+                    on_press:root.set_color(4)
+                MenuButton: # 紫
+                    background_color:1,0,1,1
+                    on_press:root.set_color(5)
+                MenuButton: # 黄
+                    background_color:1,1,0,1
+                    on_press:root.set_color(6)
+                MenuButton: # 白
+                    background_color:1,1,1,1
+                    on_press:root.set_color(7)
+                MenuButton: # ペンの太さ
+                    text:"細"
+                    on_press:root.set_pen(2)
+                MenuButton: # ペンの太さ
+                    text:"太"
+                    on_press:root.set_pen(8)
+#-----------------------------------------------------------------------
+# ボタンレイアウト（共通）
+<MenuButton@Button>:
+    background_normal:''
+    background_color:.4,.6,.2,1
+    font_size: self.width/4
+#-----------------------------------------------------------------------
+# 終了確認ダイアログ
+<PopupExitDialog>:
+    title: '確認'
+    size_hint: 0.6, 0.8 
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            font_size:self.width/14
+            text: '選択してください'
+        Button:
+            font_size:self.width/14
+            text: 'プログラム終了'
+            on_release: root.exec_exit()
+        Button:
+            font_size:self.width/14
+            text: 'キャンセル'
+            on_press: root.dismiss()
